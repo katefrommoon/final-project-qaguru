@@ -4,6 +4,7 @@ export class MainPage {
   constructor(page) {
     this.page = page;
     this.size10 = page.getByRole("link", { name: "10" });
+    this.url = process.env.UI_BASE_URL
   }
   productCard(id) {
     return this.page
@@ -12,7 +13,7 @@ export class MainPage {
   }
   async open() {
     return test.step("Открыть сайт", async () => {
-      await this.page.goto("https://academybugs.com/find-bugs/");
+      await this.page.goto(this.url);
     });
   }
 

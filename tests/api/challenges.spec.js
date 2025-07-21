@@ -3,7 +3,8 @@ import { Api } from "../../src/services/api.service";
 import { TodoBuilder } from "../../src/helpers/builders/todo.builder";
 import { NoteBuilder } from "../../src/helpers/builders/note.builder";
 
-const URL = "https://apichallenges.herokuapp.com/";
+const testUrl = process.env.API_BASE_URL;
+
 let token;
 test.describe("Challenge", () => {
   test.beforeAll(async ({ request }) => {
@@ -11,7 +12,7 @@ test.describe("Challenge", () => {
     const response = await api.challenger.post();
     const headers = await response.headers();
     token = headers["x-challenger"];
-    console.log(`${URL}/gui/challenges/${token}`);
+    console.log(`${testUrl}/gui/challenges/${token}`);
   });
   test(
     "Проверка, что ответе возвращается 10 задач",
