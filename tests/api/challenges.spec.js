@@ -21,7 +21,7 @@ test.describe("Challenge", () => {
     },
     async ({ request }) => {
       const api = new Api(request);
-      const response = await api.getTodos.get(token);
+      const response = await api.todos.get(token);
       expect(response.status()).toBe(200);
       const body = await response.json();
       expect(body.todos.length).toBe(10);
@@ -35,7 +35,7 @@ test.describe("Challenge", () => {
     },
     async ({ request }) => {
       const api = new Api(request);
-      const response = await api.getTodos.getWrong(token);
+      const response = await api.todos.getWrong(token);
       expect(response.status()).toBe(404);
     }
   );
@@ -48,7 +48,7 @@ test.describe("Challenge", () => {
     async ({ request }) => {
       const api = new Api(request);
       const id = 8;
-      const response = await api.getTodos.getById(token, id);
+      const response = await api.todos.getById(token, id);
       expect(response.status()).toBe(200);
       const body = await response.json();
       expect(body.todos[0]).toHaveProperty("id", id);
@@ -62,7 +62,7 @@ test.describe("Challenge", () => {
     },
     async ({ request }) => {
       const api = new Api(request);
-      const response = await api.getTodos.get(token);
+      const response = await api.todos.get(token);
       const body = await response.json();
       expect(body.todos[0]).toEqual(
         expect.objectContaining({
@@ -83,7 +83,7 @@ test.describe("Challenge", () => {
     async ({ request }) => {
       const api = new Api(request);
       const id = 21;
-      const response = await api.getTodos.getById(token, id);
+      const response = await api.todos.getById(token, id);
       expect(response.status()).toBe(404);
     }
   );
@@ -97,7 +97,7 @@ test.describe("Challenge", () => {
       const api = new Api(request);
       const filter = "id";
       const param = 3;
-      const response = await api.getTodos.getWithQuery(token, filter, param);
+      const response = await api.todos.getWithQuery(token, filter, param);
       expect(response.status()).toBe(200);
       const body = await response.json();
       expect(body.todos[0]).toHaveProperty("id", param);
@@ -113,10 +113,10 @@ test.describe("Challenge", () => {
       const api = new Api(request);
       const filter = "doneStatus";
       const param = false;
-      const response = await api.getTodos.getWithQuery(token, filter, param);
+      const response = await api.todos.getWithQuery(token, filter, param);
       expect(response.status()).toBe(200);
       const body = await response.json();
-      //expect(body.todos[0]).toHaveProperty("doneStatus", param);
+
       body.todos.forEach((todo) => {
         expect(todo).toHaveProperty("doneStatus", param);
       });
@@ -136,9 +136,7 @@ test.describe("Challenge", () => {
         .addDescription(50)
         .generate();
 
-      const response = await api.post.postTodos(token, newTodo);
-      //Лог ответа
-      console.log(await response.text());
+      const response = await api.todos.postTodos(token, newTodo);
 
       expect(response.status()).toBe(201);
       const body = await response.json();
@@ -164,9 +162,7 @@ test.describe("Challenge", () => {
         .addDescription(200)
         .generate();
 
-      const response = await api.post.postTodos(token, newTodo);
-      //Лог ответа
-      console.log(await response.text());
+      const response = await api.todos.postTodos(token, newTodo);
 
       expect(response.status()).toBe(201);
       const body = await response.json();
@@ -192,10 +188,7 @@ test.describe("Challenge", () => {
         .generate();
       invalidTodo.doneStatus = "true";
 
-      const response = await api.post.postTodos(token, invalidTodo);
-      //Лог ответа
-      console.log(await response.text());
-
+      const response = await api.todos.postTodos(token, invalidTodo);
       expect(response.status()).toBe(400);
     }
   );
@@ -213,10 +206,7 @@ test.describe("Challenge", () => {
         .addDescription(199)
         .generate();
 
-      const response = await api.post.postTodos(token, invalidTodo);
-      //Лог ответа
-      console.log(await response.text());
-
+      const response = await api.todos.postTodos(token, invalidTodo);
       expect(response.status()).toBe(400);
       const body = await response.json();
       expect(body.errorMessages).toContain(
@@ -238,10 +228,7 @@ test.describe("Challenge", () => {
         .addDescription(201)
         .generate();
 
-      const response = await api.post.postTodos(token, invalidTodo);
-      //Лог ответа
-      console.log(await response.text());
-
+      const response = await api.todos.postTodos(token, invalidTodo);
       expect(response.status()).toBe(400);
       const body = await response.json();
       expect(body.errorMessages).toContain(
@@ -264,10 +251,7 @@ test.describe("Challenge", () => {
         .generate();
       invalidTodo.priority = "high";
 
-      const response = await api.post.postTodos(token, invalidTodo);
-      //Лог ответа
-      console.log(await response.text());
-
+      const response = await api.todos.postTodos(token, invalidTodo);
       expect(response.status()).toBe(400);
       const body = await response.json();
       expect(body.errorMessages).toContain("Could not find field: priority");
@@ -287,10 +271,7 @@ test.describe("Challenge", () => {
         .addLongDescription(5000)
         .generate();
 
-      const response = await api.post.postTodos(token, invalidTodo);
-      //Лог ответа
-      console.log(await response.text());
-
+      const response = await api.todos.postTodos(token, invalidTodo);
       expect(response.status()).toBe(413);
       const body = await response.json();
       expect(body.errorMessages).toContain(
@@ -311,10 +292,7 @@ test.describe("Challenge", () => {
         .addDescription(50)
         .generate();
 
-      const response = await api.post.postTodos(token, invalidTodo);
-      //Лог ответа
-      console.log(await response.text());
-
+      const response = await api.todos.postTodos(token, invalidTodo);
       expect(response.status()).toBe(400);
       const body = await response.json();
       expect(body.errorMessages).toContain("title : field is mandatory");
@@ -335,9 +313,7 @@ test.describe("Challenge", () => {
         .addDescription(50)
         .generate();
 
-      const response = await api.putTodos.put(token, id, newTodo);
-      //Лог ответа
-      console.log(await response.text());
+      const response = await api.todos.put(token, id, newTodo);
 
       expect(response.status()).toBe(400);
       const body = await response.json();
@@ -362,9 +338,7 @@ test.describe("Challenge", () => {
         .addDescription(50)
         .generate();
 
-      const response = await api.putTodos.put(token, id, newTodo);
-      //Лог ответа
-      console.log(await response.text());
+      const response = await api.todos.put(token, id, newTodo);
 
       expect(response.status()).toBe(200);
       const body = await response.json();
@@ -382,10 +356,7 @@ test.describe("Challenge", () => {
       const id = 5;
       const newTodo = new TodoBuilder().addTitle(10).generate();
 
-      const response = await api.putTodos.put(token, id, newTodo);
-      //Лог ответа
-      console.log(await response.text());
-
+      const response = await api.todos.put(token, id, newTodo);
       expect(response.status()).toBe(200);
       const body = await response.json();
       expect(body.title).toBe(newTodo.title);
@@ -403,11 +374,7 @@ test.describe("Challenge", () => {
       const idBody = 4;
       const newTodo = new TodoBuilder().addId(idBody).addTitle(10).generate();
 
-      const response = await api.putTodos.put(token, idUrl, newTodo);
-      //Лог ответа
-      console.log(await response.text());
-      console.log("Тело запроса:", JSON.stringify(newTodo, null, 2));
-
+      const response = await api.todos.put(token, idUrl, newTodo);
       expect(response.status()).toBe(400);
       const body = await response.json();
       expect(body.errorMessages).toContain(
@@ -426,10 +393,7 @@ test.describe("Challenge", () => {
       const id = 9;
       const newTodo = new TodoBuilder().addDescription(80).generate();
 
-      const response = await api.putTodos.put(token, id, newTodo);
-      //Лог ответа
-      console.log(await response.text());
-
+      const response = await api.todos.put(token, id, newTodo);
       expect(response.status()).toBe(400);
       const body = await response.json();
       expect(body.errorMessages).toContain("title : field is mandatory");
@@ -444,7 +408,7 @@ test.describe("Challenge", () => {
     async ({ request }) => {
       const api = new Api(request);
       const id = 2;
-      const response = await api.deleteTodos.deleteById(token, id);
+      const response = await api.todos.deleteById(token, id);
       expect(response.status()).toBe(200);
     }
   );
@@ -455,7 +419,7 @@ test.describe("Challenge", () => {
     },
     async ({ request }) => {
       const api = new Api(request);
-      const response = await api.deleteTodos.deleteWrong(token);
+      const response = await api.todos.deleteWrong(token);
       expect(response.status()).toBe(405);
     }
   );
@@ -468,7 +432,7 @@ test.describe("Challenge", () => {
     async ({ request }) => {
       const api = new Api(request);
       const id = 123;
-      const response = await api.deleteTodos.deleteById(token, id);
+      const response = await api.todos.deleteById(token, id);
       expect(response.status()).toBe(404);
       const body = await response.json();
       expect(body.errorMessages).toContain(
@@ -484,7 +448,7 @@ test.describe("Challenge", () => {
     },
     async ({ request }) => {
       const api = new Api(request);
-      const response = await api.deleteTodos.deleteHeartbeat(token);
+      const response = await api.heartbeat.deleteHeartbeat(token);
       expect(response.status()).toBe(405);
     }
   );
@@ -496,7 +460,7 @@ test.describe("Challenge", () => {
     },
     async ({ request }) => {
       const api = new Api(request);
-      const response = await api.patch.patch(token);
+      const response = await api.heartbeat.patch(token);
       expect(response.status()).toBe(500);
     }
   );
@@ -509,7 +473,7 @@ test.describe("Challenge", () => {
     async ({ request }) => {
       const api = new Api(request);
       const auth = "Basic YWRtaW46cGFzc3dvcmQ=";
-      const response = await api.post.postAuth(token, auth);
+      const response = await api.secret.postAuth(token, auth);
       expect(response.status()).toBe(201);
       const headers = await response.headers();
       expect(headers).toHaveProperty("x-auth-token");
@@ -524,7 +488,7 @@ test.describe("Challenge", () => {
     async ({ request }) => {
       const api = new Api(request);
       const auth = "Basic YWRtaW46cGFzc3dvcmRk";
-      const response = await api.post.postAuth(token, auth);
+      const response = await api.secret.postAuth(token, auth);
       expect(response.status()).toBe(401);
       const headers = await response.headers();
       expect(headers).not.toHaveProperty("x-auth-token");
@@ -540,11 +504,11 @@ test.describe("Challenge", () => {
       const api = new Api(request);
       const newNote = new NoteBuilder().addNote(30).generate();
       const auth = "Basic YWRtaW46cGFzc3dvcmQ=";
-      const resAuth = await api.post.postAuth(token, auth);
+      const resAuth = await api.secret.postAuth(token, auth);
       const headers = await resAuth.headers();
       const authToken = headers["x-auth-token"];
 
-      const response = await api.post.postSecretNote(token, authToken, newNote);
+      const response = await api.secret.postSecretNote(token, authToken, newNote);
       //Лог ответа
       console.log(await response.text());
 
@@ -563,7 +527,7 @@ test.describe("Challenge", () => {
       const api = new Api(request);
       const newNote = new NoteBuilder().addNote(30).generate();
 
-      const response = await api.post.postSecretNoteWrong(token, newNote);
+      const response = await api.secret.postSecretNoteWrong(token, newNote);
       expect(response.status()).toBe(401);
     }
   );
@@ -577,7 +541,7 @@ test.describe("Challenge", () => {
       const api = new Api(request);
       const newNote = new NoteBuilder().addNote(30).generate();
       const authToken = "674d847e-1211-4c1b-be12-3b32b8de9a1a";
-      const response = await api.post.postSecretNote(token, authToken, newNote);
+      const response = await api.secret.postSecretNote(token, authToken, newNote);
       expect(response.status()).toBe(403);
     }
   );
