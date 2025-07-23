@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { CommentBuilder } from "../../src/helpers/builders/comment.builder";
 import { test } from "../../src/helpers/fixtures/index";
-import {productIds} from "../../src/constants/constants"
+import { productIds } from "../../src/constants/constants";
 
 test("Баг с размером изображения в карточке товара", async ({ webApp }) => {
   await webApp.main.clickCard(productIds.wrongSizeCard);
