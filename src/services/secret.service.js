@@ -1,26 +1,13 @@
 import { test } from "@playwright/test";
-const URL = "https://apichallenges.herokuapp.com/";
 
-export class PostService {
+export class SecretService {
   constructor(request) {
     this.request = request;
-  }
-  async postTodos(token, newTodo) {
-    return test.step("post /todos", async () => {
-      //const { title, doneStatus, description } = newTodo;
-      const response = await this.request.post(`${URL}todos`, {
-        headers: {
-          "x-challenger": token,
-          "Content-Type": "application/json",
-        },
-        data: newTodo,
-      });
-      return response;
-    });
+    this.url = process.env.API_BASE_URL;
   }
   async postAuth(token, auth) {
     return test.step("post /secret/token", async () => {
-      const response = await this.request.post(`${URL}secret/token`, {
+      const response = await this.request.post(`${this.url}secret/token`, {
         headers: {
           "x-challenger": token,
           Authorization: auth,
@@ -31,7 +18,7 @@ export class PostService {
   }
   async postSecretNote(token, authToken, newNote) {
     return test.step("post /secret/note", async () => {
-      const response = await this.request.post(`${URL}secret/note`, {
+      const response = await this.request.post(`${this.url}secret/note`, {
         headers: {
           "x-challenger": token,
           "Content-Type": "application/json",
@@ -44,7 +31,7 @@ export class PostService {
   }
   async postSecretNoteWrong(token, newNote) {
     return test.step("post /secret/note", async () => {
-      const response = await this.request.post(`${URL}secret/note`, {
+      const response = await this.request.post(`${this.url}secret/note`, {
         headers: {
           "x-challenger": token,
           "Content-Type": "application/json",
