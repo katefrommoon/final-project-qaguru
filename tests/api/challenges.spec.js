@@ -1,10 +1,7 @@
 import { expect } from "@playwright/test";
-import { Api } from "../../src/services/api.service";
-import { test } from "../../src/helpers/fixtures/fixture";
-import { TodoBuilder } from "../../src/helpers/builders/todo.builder";
-import { NoteBuilder } from "../../src/helpers/builders/note.builder";
-
-const testUrl = process.env.API_BASE_URL;
+import { test } from "../../src/helpers/fixtures/index";
+import { TodoBuilder } from "../../src/helpers/builders/index";
+import { NoteBuilder } from "../../src/helpers/builders/index";
 
 let token;
 test.describe("Challenge", () => {
@@ -12,7 +9,7 @@ test.describe("Challenge", () => {
     const response = await ApiService.challenger.post();
     const headers = await response.headers();
     token = headers["x-challenger"];
-    console.log(`${testUrl}/gui/challenges/${token}`);
+    console.log(`/gui/challenges/${token}`);
   });
   test(
     "Проверка, что ответе возвращается 10 задач",

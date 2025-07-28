@@ -7,7 +7,7 @@ export class SecretService {
   }
   async postAuth(token, auth) {
     return test.step("post /secret/token", async () => {
-      const response = await this.request.post(`${this.url}secret/token`, {
+      const response = await this.request.post('/secret/token', {
         headers: {
           "x-challenger": token,
           Authorization: auth,
@@ -18,7 +18,7 @@ export class SecretService {
   }
   async postSecretNote(token, authToken, newNote) {
     return test.step("post /secret/note", async () => {
-      const response = await this.request.post(`${this.url}secret/note`, {
+      const response = await this.request.post('/secret/note', {
         headers: {
           "x-challenger": token,
           "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export class SecretService {
   }
   async postSecretNoteWrong(token, newNote) {
     return test.step("post /secret/note", async () => {
-      const response = await this.request.post(`${this.url}secret/note`, {
+      const response = await this.request.post('/secret/note', {
         headers: {
           "x-challenger": token,
           "Content-Type": "application/json",

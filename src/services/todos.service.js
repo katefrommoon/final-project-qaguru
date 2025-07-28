@@ -3,11 +3,10 @@ import { test } from "@playwright/test";
 export class TodosService {
   constructor(request) {
     this.request = request;
-    this.url = process.env.API_BASE_URL;
   }
   async get(token) {
     return test.step("get /todos", async () => {
-      const response = await this.request.get(`${this.url}todos`, {
+      const response = await this.request.get('/todos', {
         headers: {
           "x-challenger": token,
         },
@@ -18,7 +17,7 @@ export class TodosService {
 
   async getWrong(token) {
     return test.step("get /todo", async () => {
-      const response = await this.request.get(`${this.url}todo`, {
+      const response = await this.request.get('/todo', {
         headers: {
           "x-challenger": token,
         },
@@ -29,7 +28,7 @@ export class TodosService {
 
   async getById(token, id) {
     return test.step("get /todos/{id}", async () => {
-      const response = await this.request.get(`${this.url}todos/${id}`, {
+      const response = await this.request.get(`/todos/${id}`, {
         headers: {
           "x-challenger": token,
         },
@@ -41,7 +40,7 @@ export class TodosService {
   async getWithQuery(token, filter, param) {
     return test.step("get /todos?filter", async () => {
       const response = await this.request.get(
-        `${this.url}todos?${filter}=${param}`,
+        `/todos?${filter}=${param}`,
         {
           headers: {
             "x-challenger": token,
@@ -53,7 +52,7 @@ export class TodosService {
   }
   async postTodos(token, newTodo) {
     return test.step("post /todos", async () => {
-      const response = await this.request.post(`${this.url}todos`, {
+      const response = await this.request.post('/todos', {
         headers: {
           "x-challenger": token,
           "Content-Type": "application/json",
@@ -66,7 +65,7 @@ export class TodosService {
 
   async put(token, id, newTodo) {
     return test.step("put /todos/{id}", async () => {
-      const response = await this.request.put(`${this.url}todos/${id}`, {
+      const response = await this.request.put(`/todos/${id}`, {
         headers: {
           "x-challenger": token,
           "Content-Type": "application/json",
@@ -79,7 +78,7 @@ export class TodosService {
 
   async deleteById(token, id) {
     return test.step("delete /todos/{id}", async () => {
-      const response = await this.request.delete(`${this.url}todos/${id}`, {
+      const response = await this.request.delete(`/todos/${id}`, {
         headers: {
           "x-challenger": token,
         },
@@ -90,7 +89,7 @@ export class TodosService {
 
   async deleteWrong(token) {
     return test.step("delete /todos", async () => {
-      const response = await this.request.delete(`${this.url}todos`, {
+      const response = await this.request.delete('/todos', {
         headers: {
           "x-challenger": token,
         },

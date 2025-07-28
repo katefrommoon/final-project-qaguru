@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import { CommentBuilder } from "../../src/helpers/builders/comment.builder";
+import { CommentBuilder } from "../../src/helpers/builders/index";
 import { test } from "../../src/helpers/fixtures/index";
 import { productIds } from "../../src/constants/constants";
 
