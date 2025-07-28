@@ -7,7 +7,7 @@ export class HeartbeatService {
   }
   async patch(token, id, newTodo) {
     return test.step("patch /heartbeat", async () => {
-      const response = await this.request.patch(`${this.url}heartbeat`, {
+      const response = await this.request.patch('/heartbeat', {
         headers: {
           "x-challenger": token,
         },
@@ -17,7 +17,7 @@ export class HeartbeatService {
   }
   async deleteHeartbeat(token) {
     return test.step("delete /heartbeat", async () => {
-      const response = await this.request.delete(`${this.url}heartbeat`, {
+      const response = await this.request.delete('/heartbeat', {
         headers: {
           "x-challenger": token,
         },
