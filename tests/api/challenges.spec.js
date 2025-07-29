@@ -1,7 +1,6 @@
 import { expect } from "@playwright/test";
 import { test } from "../../src/helpers/fixtures/index";
-import { TodoBuilder } from "../../src/helpers/builders/index";
-import { NoteBuilder } from "../../src/helpers/builders/index";
+import { TodoBuilder, NoteBuilder } from "../../src/helpers/builders/index";
 
 let token;
 test.describe("Challenge", () => {
