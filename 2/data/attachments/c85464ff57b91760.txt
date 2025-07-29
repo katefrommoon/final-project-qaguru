@@ -1,5 +1,0 @@
-{"errorMessages":["Can not amend id from 7 to 4"]}
-Тело запроса: {
-  "id": 4,
-  "title": "tondeo tre"
-}
